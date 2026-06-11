@@ -1,0 +1,58 @@
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    object      omega;
+}
+
+dimensions      [0 0 -1 0 0 0 0];
+
+internalField   uniform 10;
+
+boundaryField
+{
+    inlet
+    {
+        type fixedValue;
+        value uniform 10;
+    }
+
+    outlet
+    {
+        type zeroGradient;
+    }
+
+    sideMinY
+    {
+        type inletOutlet;
+        inletValue uniform 10;
+        value uniform 10;
+    }
+
+    sideMaxY
+    {
+        type inletOutlet;
+        inletValue uniform 10;
+        value uniform 10;
+    }
+
+    bottom
+    {
+        type inletOutlet;
+        inletValue uniform 10;
+        value uniform 10;
+    }
+
+    top
+    {
+        type inletOutlet;
+        inletValue uniform 10;
+        value uniform 10;
+    }
+
+    wing
+    {
+        type omegaWallFunction;
+        value uniform 10;
+    }
+}
