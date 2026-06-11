@@ -1,0 +1,26 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      surfaceFeaturesDict;
+}
+
+surfaces
+(
+    "wing.stl"
+);
+
+includedAngle 150;
+
+subsetFeatures
+{
+    nonManifoldEdges no;
+    openEdges yes;
+}
+
+writeObj yes;

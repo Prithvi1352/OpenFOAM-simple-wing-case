@@ -1,0 +1,82 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+
+application     pimpleFoam;
+
+startFrom       startTime;
+startTime       0;
+
+stopAt          endTime;
+endTime         0.02;
+
+deltaT          5e-5;
+
+writeControl    runTime;
+writeInterval   0.001;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+writePrecision  8;
+writeCompression off;
+
+timeFormat      general;
+timePrecision   6;
+
+runTimeModifiable true;
+
+functions
+{
+    forceCoeffs
+    {
+        type            forceCoeffs;
+        libs            ("libforces.so");
+
+        patches         (wing);
+
+        rho             rhoInf;
+        rhoInf          1.225;
+
+        CofR            (0.25 0 0);
+
+        liftDir         (0 0 1);
+        dragDir         (1 0 0);
+        pitchAxis       (0 1 0);
+
+        magUInf         20;
+        lRef            1;
+        Aref            5;
+
+        writeControl    timeStep;
+        writeInterval   10;
+
+        log             yes;
+    }
+
+    yPlus
+    {
+        type            yPlus;
+        libs            ("libfieldFunctionObjects.so");
+        patches         (wing);
+
+        writeControl    writeTime;
+        log             yes;
+    }
+
+    wallShearStress
+    {
+        type            wallShearStress;
+        libs            ("libfieldFunctionObjects.so");
+        patches         (wing);
+
+        writeControl    writeTime;
+        log             yes;
+    }
+}
