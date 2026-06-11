@@ -1,0 +1,174 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+
+// First mesh stage:
+// - castellated mesh: yes
+// - snap to STL: yes
+// - layers: no for now
+
+castellatedMesh true;
+snap            true;
+addLayers       false;
+
+
+// Geometry definitions
+geometry
+{
+    wing
+    {
+        type triSurfaceMesh;
+        file "wing.stl";
+        name wing;
+    }
+
+    nearWingBox
+    {
+        type searchableBox;
+        min (-1.0 -3.5 -1.0);
+        max ( 3.0  3.5  1.0);
+    }
+
+    wakeBox
+    {
+        type searchableBox;
+        min (0.0 -4.0 -1.5);
+        max (12.0 4.0  1.5);
+    }
+}
+
+// Castellated mesh controls
+castellatedMeshControls
+{
+    maxLocalCells 1000000;
+    maxGlobalCells 6000000;
+    minRefinementCells 10;
+    maxLoadUnbalance 0.10;
+    nCellsBetweenLevels 4;
+
+    features
+    (
+    );
+
+    refinementSurfaces
+    {
+        wing
+        {
+            level (4 4);
+
+            patchInfo
+            {
+                type wall;
+                inGroups (wingGroup);
+            }
+        }
+    }
+
+    resolveFeatureAngle 30;
+
+    refinementRegions
+    {
+        nearWingBox
+        {
+            mode inside;
+            levels ((1E15 3));
+        }
+
+        wakeBox
+        {
+            mode inside;
+            levels ((1E15 2));
+        }
+    }
+
+    locationInMesh (-4 0 0);
+
+    allowFreeStandingZoneFaces true;
+}
+
+
+// Snap controls
+snapControls
+{
+    nSmoothPatch 3;
+    tolerance 1.0;
+    nSolveIter 30;
+    nRelaxIter 5;
+
+    nFeatureSnapIter 10;
+    implicitFeatureSnap true;
+    explicitFeatureSnap false;
+    multiRegionFeatureSnap false;
+}
+
+
+// Layer controls
+addLayersControls
+{
+    relativeSizes true;
+
+    layers
+    {
+    }
+
+    expansionRatio 1.2;
+    finalLayerThickness 0.3;
+    minThickness 0.1;
+
+    nGrow 0;
+    featureAngle 120;
+    slipFeatureAngle 30;
+
+    nRelaxIter 5;
+    nSmoothSurfaceNormals 1;
+    nSmoothNormals 3;
+    nSmoothThickness 10;
+
+    maxFaceThicknessRatio 0.5;
+    maxThicknessToMedialRatio 0.3;
+    minMedianAxisAngle 90;
+
+    nBufferCellsNoExtrude 0;
+    nLayerIter 50;
+}
+
+
+// Mesh quality controls
+meshQualityControls
+{
+    maxNonOrtho 70;
+    maxBoundarySkewness 20;
+    maxInternalSkewness 4;
+    maxConcave 80;
+
+    minVol 1e-13;
+    minTetQuality 1e-30;
+    minArea -1;
+    minTwist 0.02;
+    minDeterminant 0.001;
+    minFaceWeight 0.02;
+    minVolRatio 0.01;
+    minTriangleTwist -1;
+
+    nSmoothScale 4;
+    errorReduction 0.75;
+}
+
+
+// Write options
+writeFlags
+(
+    scalarLevels
+    layerSets
+    layerFields
+);
+
+mergeTolerance 1e-6;

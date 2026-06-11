@@ -1,0 +1,28 @@
+# OpenFOAM generated time directories
+[0-9]*
+processor*
+postProcessing/
+
+# Logs
+log.*
+*.log
+
+# ParaView / visualization
+*.foam
+*.vtk
+*.vtp
+*.vtu
+*.pvsm
+*.btr
+# Mesh/generated large files
+constant/polyMesh/
+constant/triSurface/*.eMesh
+constant/triSurface/*.extendedFeatureEdgeMesh
+
+# Temporary files
+*.gz
+*.tmp
+*.bak
+*~
+*.obj
+*.btrsweep_15/

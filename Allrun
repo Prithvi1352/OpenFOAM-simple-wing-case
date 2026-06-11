@@ -1,0 +1,28 @@
+#!/bin/sh
+cd ${0%/*} || exit 1
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+echo "Running blockMesh..."
+runApplication blockMesh
+
+echo "Checking blockMesh mesh..."
+runApplication checkMesh
+
+echo "Running surfaceFeatureExtract..."
+runApplication surfaceFeatureExtract
+
+echo "Running snappyHexMesh..."
+runApplication snappyHexMesh -overwrite
+
+echo "Checking snappy mesh..."
+runApplication checkMesh -allTopology -allGeometry
+
+echo "Running patchSummary..."
+runApplication patchSummary
+
+echo "Running potentialFoam..."
+runApplication potentialFoam
+
+echo "Running simpleFoam..."
+runApplication simpleFoam
