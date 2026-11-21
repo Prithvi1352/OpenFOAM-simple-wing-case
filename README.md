@@ -8,7 +8,6 @@
 
 This hands-on study compares two finite NACA 2412 wings with the same nominal 1 m chord, 5 m span, and 5 m² reference area: a straight wing and a wing with 15° quarter-chord sweep. It demonstrates parametric STL generation, OpenFOAM case setup, meshing, transient RANS, aerodynamic analysis, and ParaView visualization. A longer-term aim is comparison with the companion [vortex panel method project](https://github.com/Prithvi1352/Vortex_panel_method).
 
-> **Scope note:** This project explores the aerodynamic characteristics of finite wings with 0° and 15° sweep using OpenFOAM. It covers geometry generation, meshing, transient CFD simulations, and postprocessing, with a focus on comparing aerodynamic loading and visualizing three-dimensional flow structures.
 
 <p align="center">
   <a href="#case-definition">Case definition</a> ·
