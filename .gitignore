@@ -3,6 +3,22 @@
 processor*
 postProcessing/
 
+# Postprocessing scripts (basename rules apply at every directory depth)
+postprocess.py
+plot_aero_history.py
+plot_spanwise_lift.py
+animate_q_pressure.py
+preview_starting_vortex.py
+run_spanwise_lift.sh
+
+# Windows download metadata associated with those scripts
+postprocess.py?Zone.Identifier
+plot_aero_history.py?Zone.Identifier
+plot_spanwise_lift.py?Zone.Identifier
+animate_q_pressure.py?Zone.Identifier
+preview_starting_vortex.py?Zone.Identifier
+run_spanwise_lift.sh?Zone.Identifier
+
 # Logs
 log.*
 *.log
