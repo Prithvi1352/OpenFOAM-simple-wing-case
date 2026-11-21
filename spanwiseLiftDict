@@ -1,0 +1,38 @@
+/* Post-process-only force binning: OpenFOAM Foundation v13.
+   Used with: foamPostProcess -solver incompressibleFluid -dict system/spanwiseLiftDict -time 1.1
+   Do not wrap this dictionary in "functions { ... }" when using -dict.
+*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      spanwiseLiftDict;
+}
+
+spanwiseLift
+{
+    type            forceCoeffs;
+    libs            ("libforces.so");
+
+    patches         (wing);
+    rho             rhoInf;
+    rhoInf          1.225;
+
+    CofR            (0.25 0 0);  // Moment reference; lift is independent of it.
+    liftDir         (0 0 1);
+    dragDir         (1 0 0);
+    pitchAxis       (0 1 0);
+
+    magUInf         20;
+    lRef            1;
+    Aref            5;
+    log             yes;
+
+    binData
+    {
+        nBin        40;
+        direction   (0 1 0);
+        cumulative  no;
+    }
+}
